@@ -73,10 +73,11 @@ app.use((req, res) => {
                 title="to jest jakis tytul"
                 index_src="./index.js"
                 html_content={html_content}
+                data_init={JSON.stringify(client.cache.extract())}
             />
         );
 
-        //html_layout
+        //.replace(/\"/gi, '\'')
 
         res.status(200);
         res.send(`<!doctype html>\n${html_layout}`);

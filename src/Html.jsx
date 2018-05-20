@@ -7,10 +7,11 @@ type PropsType = {|
     title: string,
     index_src: string,
     html_content: string,
+    data_init: string,
 |};
 
 export const Html = (props: PropsType) => {
-    const { title, index_src, html_content } = props;
+    const { title, index_src, html_content, data_init } = props;
 
     return (
         <html>
@@ -22,6 +23,7 @@ export const Html = (props: PropsType) => {
                 <div
                     id="root"
                     dangerouslySetInnerHTML={{__html: html_content}}
+                    data-init={data_init}
                 />
                 <script src={index_src}></script>
             </body>
