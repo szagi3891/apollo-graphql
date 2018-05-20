@@ -9,6 +9,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloProvider } from "react-apollo";
 import { hydrate } from 'emotion'
 
+import { BrowserRouter } from 'react-router-dom';
 
 const root = document.getElementById('root');
 
@@ -29,7 +30,9 @@ if (root) {
 
         ReactDOM.render((
             <ApolloProvider client={client}>
-                <App />
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
             </ApolloProvider>
         ), root);
     } else {

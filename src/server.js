@@ -12,6 +12,7 @@ import { App } from './App/App';
 import { renderToString } from "react-dom/server";
 import { renderToStaticMarkup } from 'react-dom/server';
 import { extractCritical } from 'emotion-server';
+import { StaticRouter } from 'react-router';
 
 import { Html } from './Html';
 import path from 'path';
@@ -51,12 +52,11 @@ app.use((req, res) => {
 
     const context = {};
 
-    // The client-side App will instead use <BrowserRouter>
     const WrappedApp = (
         <ApolloProvider client={client}>
-            { /* <StaticRouter location={req.url} context={context}> */ }
+            <StaticRouter location={req.url} context={context}>
                 <App />
-            { /* </StaticRouter> */ }
+            </StaticRouter>
         </ApolloProvider>
     );
 
@@ -67,7 +67,7 @@ app.use((req, res) => {
         const html_layout = renderToStaticMarkup(
             <Html
                 title="to jest jakis tytul"
-                index_src="./index.js"
+                index_src="/index.js"
                 html_content={html}
                 data_init={JSON.stringify(client.cache.extract())}
                 ids={ids}
