@@ -1,25 +1,37 @@
 //@flow
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { App } from './App';
 
-import ApolloClient from "apollo-boost";
-import gql from "graphql-tag";
 
+//import ApolloClient from "apollo-boost";
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from "apollo-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { ApolloProvider } from "react-apollo";
+
+/*
 const client = new ApolloClient({
   uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
 });
+*/
 
-client
-  .query({
-    query: gql`
-      {
-        rates(currency: "USD") {
-          name,
-          rate,
-          currency
-        }
-      }
-    `
-  })
-  .then(result => {
-    console.log(result);
-    console.log(JSON.stringify(result.data));
-  });
+const client = new ApolloClient({
+    //link: createHttpLink({ uri: "/graphql" }),
+    link: createHttpLink({ uri: "https://w5xlvm3vzz.lp.gql.zone/graphql" }),
+    cache: new InMemoryCache() //.restore(window.__APOLLO_STATE__),
+});
+
+
+const root = document.getElementById('root');
+
+if (root) {
+    ReactDOM.render((
+        <ApolloProvider client={client}>
+            <App />
+        </ApolloProvider>
+    ), root);
+} else {
+    console.error('App startup: #root element not found');
+}
+
