@@ -3,6 +3,8 @@ import React from 'react';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
+import styled from 'react-emotion';
+
 import logo_src from './logo.png';
 
 type PropsType = {|
@@ -17,11 +19,16 @@ const query = gql`{
 }
 `;
 
+const Img = styled('img')`
+    width: 200px;
+    height: 200px;
+`;
+
 export class App extends React.PureComponent<PropsType> {
     render() {
         return (
             <div>
-                <img src={logo_src} />
+                <Img src={logo_src} />
                 <Query query={query}>
                     {({ loading, error, data }) => {
                         if (loading) {

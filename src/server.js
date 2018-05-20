@@ -11,17 +11,13 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { App } from './App/App';
 import { renderToString } from "react-dom/server";
 import { renderToStaticMarkup } from 'react-dom/server';
+import { extractCritical } from 'emotion-server';
 
 import { Html } from './Html';
 import path from 'path';
 import fetch from 'node-fetch';
 
-
-//import Layout from './routes/Layout';
-
-
 const basePort = 8000;
-
 
 const app = new Express();
 
@@ -66,14 +62,16 @@ app.use((req, res) => {
 
     getDataFromTree(WrappedApp).then(() => {
 
-        const html_content = renderToString(WrappedApp);
+        const { html, ids, css } = extractCritical(renderToString(WrappedApp));
 
         const html_layout = renderToStaticMarkup(
             <Html
                 title="to jest jakis tytul"
                 index_src="./index.js"
-                html_content={html_content}
+                html_content={html}
                 data_init={JSON.stringify(client.cache.extract())}
+                ids={ids}
+                css={css}
             />
         );
 
