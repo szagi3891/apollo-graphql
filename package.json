@@ -1,0 +1,33 @@
+{
+  "name": "apollo-graphql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:szagi3891/apollo-graphql.git",
+  "author": "Grzegorz Szeliga <szeligagrzegorz@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-boost": "^0.1.6",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
+    "react": "^16.3.2",
+    "react-apollo": "^2.1.4",
+    "react-dom": "^16.3.2"
+  },
+  "scripts": {
+    "flow": "flow status",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "babel-jest": "^22.4.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "flow-bin": "^0.72.0",
+    "jest": "^22.4.4"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  }
+}
