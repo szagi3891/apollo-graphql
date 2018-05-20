@@ -1,7 +1,7 @@
 //@flow
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { App } from './App';
+import { App } from './App/App';
 
 
 //import ApolloClient from "apollo-boost";
@@ -12,12 +12,11 @@ import { ApolloProvider } from "react-apollo";
 
 /*
 const client = new ApolloClient({
-  uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
+    uri: "https://w5xlvm3vzz.lp.gql.zone/graphql"
 });
 */
 
 const client = new ApolloClient({
-    //link: createHttpLink({ uri: "/graphql" }),
     link: createHttpLink({ uri: "https://w5xlvm3vzz.lp.gql.zone/graphql" }),
     cache: new InMemoryCache() //.restore(window.__APOLLO_STATE__),
 });
