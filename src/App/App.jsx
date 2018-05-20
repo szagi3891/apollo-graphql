@@ -11,12 +11,23 @@ type PropsType = {|
 |};
 
 const query = gql`{
-    rates(currency: "PLN") {
+    pokemons(first: 10) {
+        id,
+        number,
         name
-        currency
-        rate
     }
 }
+`;  
+
+const queryItem = gql`
+    query pokemon($id: String!) {
+        pokemon(id: $id) {
+            id,
+            number,
+            name,
+            image
+        }
+    }
 `;
 
 const Img = styled('img')`
@@ -24,34 +35,59 @@ const Img = styled('img')`
     height: 200px;
 `;
 
+const listItem = (itemData: Object) => {
+    const { id, number, name } = itemData;
+    return (
+        <div key={id}>
+            <p>{`${id} - ${number} - ${name}`}</p>
+        </div>
+    );
+};
+
+const List = () => (
+    <Query query={query}>
+        {({ loading, error, data }) => {
+            if (loading) {
+                return <p>Loading...</p>;
+            }
+            
+            if (error) {
+                return <p>Error :(</p>
+            };
+
+            return data.pokemons.map(listItem);
+        }}
+    </Query>
+);
+
+const Detail = (props: {id: string}) => {
+    const { id } = props;
+
+    return (
+        <Query query={queryItem} variables={{ id }}>
+            {({ loading, error, data }) => {
+                const { id, name, image } = data.pokemon;
+
+                return (
+                    <div>
+                        <div>{name} - {id}</div>
+                        <div>
+                            <img src={image} />
+                        </div>
+                    </div>
+                );
+            }}
+        </Query>
+    );
+};
+
 export class App extends React.PureComponent<PropsType> {
     render() {
         return (
             <div>
                 <Img src={logo_src} />
-                <Query query={query}>
-                    {({ loading, error, data }) => {
-                        if (loading) {
-                            return <p>Loading...</p>;
-                        }
-                        
-                        if (error) {
-                            return <p>Error :(</p>
-                        };
-
-                        return data.rates.map(this._renderItem);
-                    }}
-                </Query>
-            </div>
-        );
-    }
-
-    _renderItem = (item: Object) => {
-        const { name, currency, rate } = item;
-
-        return (
-            <div key={currency}>
-                <p>{`${name} => ${currency}: ${rate}`}</p>
+                <List />
+                <Detail id="UG9rZW1vbjowMDE=" />
             </div>
         );
     }

@@ -23,7 +23,7 @@ if (root) {
         hydrate(data_ids);
 
         const client = new ApolloClient({
-            link: createHttpLink({ uri: "https://w5xlvm3vzz.lp.gql.zone/graphql" }),
+            link: createHttpLink({ uri: "https://graphql-pokemon.now.sh/" }),
             cache: new InMemoryCache().restore(data_init)
         });
 

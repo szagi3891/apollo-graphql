@@ -39,7 +39,7 @@ app.use((req, res) => {
     const client = new ApolloClient({
         ssrMode: true,
         link: createHttpLink({
-            uri: 'https://w5xlvm3vzz.lp.gql.zone/graphql',
+            uri: 'https://graphql-pokemon.now.sh/',
             credentials: 'same-origin',
             headers: {
                 cookie: req.header('Cookie'),
