@@ -28,6 +28,12 @@ if (root) {
             cache: new InMemoryCache().restore(data_init)
         });
 
+        /*
+        https://github.com/ReactTraining/react-router/issues/6072
+        https://github.com/ReactTraining/react-router/issues/5901
+        https://github.com/ReactTraining/react-router/pull/5908
+        */
+
         ReactDOM.render((
             <ApolloProvider client={client}>
                 <BrowserRouter>
