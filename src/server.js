@@ -10,9 +10,12 @@ import Express from 'express';
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { App } from './App/App';
 import { renderToString } from "react-dom/server";
+import { renderToStaticMarkup } from 'react-dom/server';
 
+import { Html } from './Html';
 import path from 'path';
 import fetch from 'node-fetch';
+
 
 //import Layout from './routes/Layout';
 
@@ -26,6 +29,13 @@ app.use(
     '/static',
     Express.static(
         path.join(__dirname, 'static')
+    )
+);
+
+app.use(
+    '/index.js',
+    Express.static(
+        path.join(__dirname, 'index.js')
     )
 );
 
@@ -56,10 +66,20 @@ app.use((req, res) => {
 
     getDataFromTree(WrappedApp).then(() => {
 
-        const html = renderToString(WrappedApp);
+        const html_content = renderToString(WrappedApp);
+
+        const html_layout = renderToStaticMarkup(
+            <Html
+                title="to jest jakis tytul"
+                index_src="./index.js"
+                html_content={html_content}
+            />
+        );
+
+        //html_layout
 
         res.status(200);
-        res.send(`<!doctype html>\n${html}`);
+        res.send(`<!doctype html>\n${html_layout}`);
         res.end();
     });
 });
