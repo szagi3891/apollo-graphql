@@ -30,6 +30,8 @@ if (root) {
 
         /*
         https://github.com/ReactTraining/react-router/issues/6072
+            https://codesandbox.io/s/rjl08qoxlp
+
         https://github.com/ReactTraining/react-router/issues/5901
         https://github.com/ReactTraining/react-router/pull/5908
         */
@@ -41,6 +43,29 @@ if (root) {
                 </BrowserRouter>
             </ApolloProvider>
         ), root);
+
+        /*
+        push do historii z dowolnego miejsca
+
+        const store = configureStore()
+        const customHistory = createBrowserHistory({
+        basename: config.urlBasename || ''
+        })
+        
+        ReactDOM.render(
+        <Provider store={store}>
+            <Router history={customHistory}>
+            <Route component={({history}) => {
+                window.appHistory = history
+                return (
+                <App />
+                )
+            }}/>
+            </Router>
+        </Provider>,
+        document.getElementById('root')
+        )
+        */
     } else {
         console.error('App startup: #root.data-init or #root.data-ids attribute not found');
     }
