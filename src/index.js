@@ -9,6 +9,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloProvider } from "react-apollo";
 import { hydrate } from 'emotion'
 
+import { withRouter } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
 const root = document.getElementById('root');
@@ -36,36 +37,15 @@ if (root) {
         https://github.com/ReactTraining/react-router/pull/5908
         */
 
+        const AppWithRouter = withRouter(App);
+
         ReactDOM.render((
             <ApolloProvider client={client}>
                 <BrowserRouter>
-                    <App />
+                    <AppWithRouter />
                 </BrowserRouter>
             </ApolloProvider>
         ), root);
-
-        /*
-        push do historii z dowolnego miejsca
-
-        const store = configureStore()
-        const customHistory = createBrowserHistory({
-        basename: config.urlBasename || ''
-        })
-        
-        ReactDOM.render(
-        <Provider store={store}>
-            <Router history={customHistory}>
-            <Route component={({history}) => {
-                window.appHistory = history
-                return (
-                <App />
-                )
-            }}/>
-            </Router>
-        </Provider>,
-        document.getElementById('root')
-        )
-        */
     } else {
         console.error('App startup: #root.data-init or #root.data-ids attribute not found');
     }

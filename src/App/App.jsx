@@ -63,42 +63,32 @@ const List = () => (
 );
 
 const Detail = (props: {id: string}) => {
-    console.info('REnderuję Details', props);
-
     const { id } = props;
 
     return (
-        <Query query={queryItem} variables={{ id }}>
-            {({ loading, error, data }) => {
-                if (loading) return "Loading...";
-                if (error) return `Error! ${error.message}`;
-
-                if (!data.pokemon) {
-                    return '404...';
-                }
-
-                const { id, name, image } = data.pokemon;
-
-                return (
-                    <div>
-                        <div>{name} - {id}</div>
-                        <div>
-                            <img src={image} />
-                        </div>
-                    </div>
-                );
-            }}
-        </Query>
-    );
-};
-
-const DetailRoute = (props: Object) => {
-    //console.info('AAAA', props);
-    const { match } = props;
-    return (
         <React.Fragment>
             <Link to="/">Back</Link>
-            <Detail id={match.params.id} />
+            <Query query={queryItem} variables={{ id }}>
+                {({ loading, error, data }) => {
+                    if (loading) return <div>Loading...</div>;
+                    if (error) return <div>Error! {error.message}</div>;
+
+                    if (!data.pokemon) {
+                        return '404...';
+                    }
+
+                    const { id, name, image } = data.pokemon;
+
+                    return (
+                        <div>
+                            <div>{name} - {id}</div>
+                            <div>
+                                <img src={image} />
+                            </div>
+                        </div>
+                    );
+                }}
+            </Query>
         </React.Fragment>
     );
 };
@@ -111,7 +101,11 @@ export class App extends React.PureComponent<PropsType> {
                 <div>
                     <Switch>
                         <Route exact path='/' component={List} />
-                        <Route path="/details/:id" component={DetailRoute} />
+                        <Route path="/details/:id" component={(param) => {
+                            return (
+                                <Detail id={param.match.params.id} />
+                            );
+                        }} />
                     </Switch>
                 </div>
             </div>
